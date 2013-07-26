@@ -2,18 +2,6 @@
 
 class ActiveRecord extends CActiveRecord implements IArrayable
 {
-    public function init()
-    {
-        $this->onBeforeSave = function(){
-            if ($this->timestamp) {
-                $this->{static::UPDATED_AT} = time();
-                if ($this->isNewRecord) {
-                    $this->{static::CREATED_AT} = $this->{static::UPDATED_AT};
-                }
-            }
-        };
-    }
-
     /**
      * hidden attributes fo toArray
      *
@@ -35,6 +23,18 @@ class ActiveRecord extends CActiveRecord implements IArrayable
     public static function model($className = null)
     {
         return parent::model($className ?: get_called_class());
+    }
+
+    public function init()
+    {
+        $this->onBeforeSave = function(){
+            if ($this->timestamp) {
+                $this->{static::UPDATED_AT} = time();
+                if ($this->isNewRecord) {
+                    $this->{static::CREATED_AT} = $this->{static::UPDATED_AT};
+                }
+            }
+        };
     }
 
     /**
