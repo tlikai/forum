@@ -53,6 +53,7 @@ class Response
         header("HTTP/1.1 $code $status");
         header('Content-Type:application/json');
         echo json_encode($data);
+        exit;
     }
 
     public static function makeArray($data)

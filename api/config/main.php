@@ -25,6 +25,8 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'rules' => array(
+                array('users/<action>', 'pattern' => '<action:(signup|signin|signout)>', 'verb' => 'POST'),
+
                 array('<controller>/index', 'pattern' => '<controller:\w+>', 'verb' => 'GET'),
                 array('<controller>/show', 'pattern' => '<controller:\w+>/<id:\d+>', 'verb' => 'GET'),
                 array('<controller>/create', 'pattern' => '<controller:\w+>', 'verb' => 'POST'),

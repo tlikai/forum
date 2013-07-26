@@ -21,7 +21,7 @@ class ApiController extends CController
                 'actions' => array('index', 'show'),
                 'users' => array('*'),
             ),
-            array(
+            array('allow',
                 'actions' => array('create', 'update', 'delete'),
                 'users' => array('@'),
             ),
@@ -36,7 +36,11 @@ class ApiController extends CController
 		$event->handled = true;
         if ($event instanceof CExceptionEvent) {
             $data['code'] = $event->exception->getCode();
-            $data['message'] = $event->exception->getMessage(); 
+            if ($event->exception instanceof ValidationException) {
+                $data['message'] = $event->exception->getMessages(); 
+            } else {
+                $data['message'] = $event->exception->getMessage(); 
+            }
         } else {
 			$data['code'] = 500;
 			$data['message'] = $event->message; 

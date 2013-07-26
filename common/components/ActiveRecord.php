@@ -2,6 +2,18 @@
 
 class ActiveRecord extends CActiveRecord implements IArrayable
 {
+    public function init()
+    {
+        $this->onBeforeSave = function(){
+            if ($this->timestamp) {
+                $this->{static::UPDATED_AT} = time();
+                if ($this->isNewRecord) {
+                    $this->{static::CREATED_AT} = $this->{static::UPDATED_AT};
+                }
+            }
+        };
+    }
+
     /**
      * hidden attributes fo toArray
      *
@@ -9,6 +21,21 @@ class ActiveRecord extends CActiveRecord implements IArrayable
      * @var array
      */
     protected $hidden = array();
+
+    /**
+     * Auto fill time field
+     *
+     * @var boolean
+     */
+    protected $timestamp = true;
+
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+    public static function model($className = null)
+    {
+        return parent::model($className ?: get_called_class());
+    }
 
     /**
      * Find model or throw exception
@@ -54,13 +81,14 @@ class ActiveRecord extends CActiveRecord implements IArrayable
         return array_diff_key($attributes, array_flip($this->hidden));
     }
 
-    /**
-     * Convert model to string
-     *
-     * @return string
-     */
-    public function __toString()
+    public function getHidden()
     {
-        return json_encode($this->toArray());
+        return $this->hidden;
+    }
+
+    public function setHidden($attributes)
+    {
+        $attributes = is_array($attributes) ? $attributes : func_get_args();
+        $this->hidden = $attributes;
     }
 }

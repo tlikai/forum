@@ -31,10 +31,10 @@ class ValidationException extends Exception
 {
     protected $messages;
 
-    public function __construct($validator, $code = 400)
+    public function __construct($message = null, $code = 400)
     {
-        $this->messages = $validator->messages();
-        parent::__construct($this->messages, $code);
+        $this->messages = $message;
+        parent::__construct(null, $code);
     }
 
     public function getMessages()

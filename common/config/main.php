@@ -26,12 +26,16 @@ return array(
 
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=teaconf',
+            'connectionString' => 'mysql:host=localhost;dbname=forum_with_yii',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => '',
+        ),
+
+        'user' => array(
+            'class' => 'WebUser',
         ),
 
         'log' => array(

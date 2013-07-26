@@ -1,6 +1,7 @@
 .DS_Store
 Thumbs.db
 
+/api/runtime
 /console/runtime
 /backend/runtime
 /frontend/runtime
