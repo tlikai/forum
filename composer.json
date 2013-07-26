@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "common/vendors"
+    },
+    "require": {
+        "yiisoft/yii": "dev-master"
+    }
+}

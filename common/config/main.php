@@ -1,0 +1,52 @@
+<?php
+
+return array(
+    'name' => 'application name',
+
+    'preload' => array('log'),
+
+    'aliases' => array(
+        'common' => __DIR__ . '/../../common',
+        'vendor' => __DIR__ . '/../../common/vendors',
+        'console' => __DIR__ . '/../../console',
+        'backend' => __DIR__ . '/../../backend',
+        'frontend' => __DIR__ . '/../../frontend',
+    ),
+
+    'import' => array(
+        'common.models.*',
+        'common.helpers.*',
+        'common.components.*',
+
+        'application.models.*',
+        'application.helpers.*',
+        'application.components.*',
+        'application.controllers.*',
+    ),
+
+    'components' => array(
+        'db' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=teaconf',
+            'emulatePrepare' => true,
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+            'tablePrefix' => '',
+        ),
+
+        'log' => array(
+            'class'  => 'CLogRouter',
+            'routes' => array(
+                /*
+                array(
+                    'class' => 'CWebLogRoute',
+                    'levels' => 'error, warning',
+                ),
+                 */
+            ),
+        ),
+    ),
+
+    // application parameters
+    'params' => array(),
+);

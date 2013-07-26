@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+
+/console/runtime
+/backend/runtime
+/frontend/runtime
+
+/common/vendors
+composer.phar
+composer.lock
