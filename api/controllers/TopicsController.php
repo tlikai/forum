@@ -14,9 +14,9 @@ class TopicsController extends ApiController
 
     public function actionCreate()
     {
-        // TODO implement topic tags
         $topic = new Topic('create');
-        $topic->attributes = Input::only('subject', 'content', 'tags');
+        $topic->attributes = Input::only('subject', 'content');
+        $topic->tagIds = Input::get('tags');
 
         if (!$topic->save()) {
             throw new ValidationException($topic->getErrors());
@@ -28,7 +28,8 @@ class TopicsController extends ApiController
     public function actionUpdate($id)
     {
         $topic = Topic::model()->findOrFail($id);
-        $topic->attributes = Input::only('subject', 'content', 'tags');
+        $topic->attributes = Input::only('subject', 'content');
+        $topic->tagIds = Input::get('tags');
 
         if ($topic->created_by != Yii::app()->user->id) {
             throw new UnauthorizedException;

@@ -2,7 +2,7 @@
 
 class Topic extends ActiveRecord
 {
-    public $tags;
+    public $tagIds;
 
     public function init()
     {
@@ -17,6 +17,7 @@ class Topic extends ActiveRecord
                 $this->last_post_by = $this->created_by;
             }
         };
+        $this->onAfterSave = array($this, 'resolveTags');
     }
 
     public function tableName()
@@ -27,8 +28,25 @@ class Topic extends ActiveRecord
     public function rules()
     {
         return array(
-            array('subject, content, tags', 'required'),
+            array('subject, content, tagIds', 'required'),
             array('created_by, last_post_at, last_post_by, score, like_count, reply_count, follower_count, created_at, updated_at', 'numerical'),
         );
+    }
+
+    public function resolveTags(CEvent $e)
+    {
+        if (!$this->isNewRecord) {
+            TopicTag::model()->deleteAll('topic_id = ?', array($this->id));
+        }
+
+        $tagIds = array_slice($this->tagIds, 0, 5);
+        foreach ($tagIds as $tagId) {
+            $model = new TopicTag;
+            $model->attributes = array(
+                'tag_id' => $tagId,
+                'topic_id' => $this->id,
+            );
+            $model->save();
+        }
     }
 }
