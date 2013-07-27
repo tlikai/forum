@@ -78,6 +78,13 @@ class ActiveRecord extends CActiveRecord implements IArrayable
     public function toArray()
     {
         $attributes = $this->getAttributes();
+
+        foreach($this->relations() as $name => $v) {
+            if ($this->hasRelated($name)) {
+                $attributes[$name] = $this->getRelated($name)->toArray();
+            }
+        }
+
         return array_diff_key($attributes, array_flip($this->hidden));
     }
 

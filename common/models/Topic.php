@@ -33,6 +33,13 @@ class Topic extends ActiveRecord
         );
     }
 
+    public function relations()
+    {
+        return array(
+            'user' => array(static::BELONGS_TO, 'User', 'created_by'),
+        );
+    }
+
     public function resolveTags(CEvent $e)
     {
         if (!$this->isNewRecord) {

@@ -9,7 +9,7 @@ class TopicsController extends ApiController
 
     public function actionShow($id)
     {
-        Response::make(Topic::model()->findOrFail($id));
+        Response::make(Topic::model()->with('user')->findOrFail($id));
     }
 
     public function actionCreate()
