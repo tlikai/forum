@@ -28,7 +28,6 @@ class TagsController extends ApiController
     {
         $tag = Tag::model()->findOrFail($id);
         $tag->attributes = Input::only('name', 'title');
-        $tag->validate();
 
         if (!$tag->save()) {
             throw new ValidationException($tag->getErrors());
