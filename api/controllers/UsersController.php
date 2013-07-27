@@ -28,13 +28,11 @@ class UsersController extends ApiController
         $user = new User('create');
         $user->setAttributes(Input::only('name', 'email', 'password'));
 
-        if ($user->validate()) {
-            if ($user->save()) {
-                Response::make($user);
-            }
+        if (!$user->save()) {
+            throw new ValidationException($user->getErrors());
         }
 
-        throw new ValidationException($user->getErrors());
+        Response::make($user);
     }
 
     public function actionSignin()
@@ -43,13 +41,13 @@ class UsersController extends ApiController
         $password = Input::get('password');
 
         $identity = new UserIdentity($name, $password);
-        if ($identity->authenticate()) {
-			$duration = true ? 3600 * 24 * 30 : 0; // FIXME
-            Yii::app()->user->login($identity, $duration);
-            Response::make($identity->user);
+        if (!$identity->authenticate()) {
+            throw new InvalidRequestException('Invalid ID or password');
         }
+        $duration = true ? 3600 * 24 * 30 : 0; // TODO remember me
+        Yii::app()->user->login($identity, $duration);
 
-        throw new InvalidRequestException('Invalid ID or password');
+        Response::make($identity->user);
     }
 
     public function actionSignout()
