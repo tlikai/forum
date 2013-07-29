@@ -17,7 +17,7 @@ class UrlManager extends CUrlManager
     protected $subResourcePatterns = array(
         'index'  => array('<controller>/index', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>', 'verb' => 'GET'),
         'show'   => array('<controller>/show', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>/<id:\d+>', 'verb' => 'GET'),
-        'create' => array('<controller>/create', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>/<id:\d+>', 'verb' => 'POST'),
+        'create' => array('<controller>/create', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>', 'verb' => 'POST'),
         'update' => array('<controller>/update', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>/<id:\d+>', 'verb' => 'PUT'),
         'delete' => array('<controller>/delete', 'pattern' => '<relation:({resources})>/<relation_id:\d+>/<controller:({subresources})>/<id:\d+>', 'verb' => 'DELETE'),
     );
