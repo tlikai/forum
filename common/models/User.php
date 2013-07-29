@@ -4,15 +4,6 @@ class User extends ActiveRecord
 {
     protected $hidden = array('password');
 
-    public function init()
-    {
-        parent::init();
-
-        $this->onBeforeSave = function(CEvent $e) {
-            $this->password = Hash::make($this->password);
-        };
-    }
-
     public function tableName()
     {
         return '{{users}}';
@@ -30,6 +21,15 @@ class User extends ActiveRecord
 
             array('name, email', 'unique', 'className' => 'User', 'on' => 'create'),
         );
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        $this->onBeforeSave = function(CEvent $e) {
+            $this->password = Hash::make($this->password);
+        };
     }
 
     public function findByName($name)

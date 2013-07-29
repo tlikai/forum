@@ -4,22 +4,6 @@ class Topic extends ActiveRecord
 {
     public $tagIds;
 
-    public function init()
-    {
-        parent::init();
-
-        $this->onBeforeSave = function(CEvent $e){
-            if ($this->isNewRecord) {
-                if (!$this->created_by) {
-                    $this->created_by = Yii::app()->user->id;    
-                }
-                $this->last_post_at = $this->created_at;
-                $this->last_post_by = $this->created_by;
-            }
-        };
-        $this->onAfterSave = array($this, 'resolveTags');
-    }
-
     public function tableName()
     {
         return '{{topics}}';
@@ -38,6 +22,22 @@ class Topic extends ActiveRecord
         return array(
             'user' => array(static::BELONGS_TO, 'User', 'created_by'),
         );
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        $this->onBeforeSave = function(CEvent $e){
+            if ($this->isNewRecord) {
+                if (!$this->created_by) {
+                    $this->created_by = Yii::app()->user->id;    
+                }
+                $this->last_post_at = $this->created_at;
+                $this->last_post_by = $this->created_by;
+            }
+        };
+        $this->onAfterSave = array($this, 'resolveTags');
     }
 
     public function resolveTags(CEvent $e)
