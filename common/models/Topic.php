@@ -12,7 +12,8 @@ class Topic extends ActiveRecord
     public function rules()
     {
         return array(
-            array('subject, content, tagIds', 'required'),
+            array('subject, content', 'required'),
+            array('tagIds', 'required', 'on' => 'create'),
             array('created_by, last_post_at, last_post_by, score, like_count, reply_count, follower_count, created_at, updated_at', 'numerical'),
         );
     }

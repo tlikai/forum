@@ -31,7 +31,11 @@ return array(
                 'topics.replies',
             ),
             'rules' => array(
+                // users services
                 array('users/<action>', 'pattern' => '<action:(signup|signin|signout)>', 'verb' => 'POST'),
+
+                // topics services
+                array('topics/<action>', 'pattern' => 'topics/<id:\d+>/<action:(like|unlike|follow|unfollow)>', 'verb' => 'POST'),
             ),
         ),
 

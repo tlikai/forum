@@ -2,6 +2,16 @@
 
 class TopicsController extends ApiController
 {
+    public function accessRules()
+    {
+        return array_merge(array(
+            array('allow',
+                'actions' => array('like', 'unlike', 'follow', 'unfollow'),
+                'users' => array('@'),
+            ),
+        ), parent::accessRules());
+    }
+
     public function actionIndex()
     {
         Response::make(Topic::model()->paginate());
@@ -55,5 +65,19 @@ class TopicsController extends ApiController
         }
 
         Response::make($topic);
+    }
+
+    public function actionLike($id)
+    {
+        if (!TopicFlag::like($id)) {
+            throw new RuntimeException;
+        }
+    }
+
+    public function actionUnlike($id)
+    {
+        if (!TopicFlag::unlike($id)) {
+            throw new RuntimeException;
+        }
     }
 }
