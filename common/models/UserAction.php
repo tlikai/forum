@@ -125,18 +125,19 @@ class UserAction extends ActiveRecord
 
     public static function __callStatic($method, $parameters)
     {
-        if (in_array($method, array('reply', 'unReply', 'like', 'unLike', 'hasLike', 'follow', 'unFollow', 'hasFollow', 'bookmark', 'unBookmark', 'hasBookmark'))) {
+        $method = strtolower($method);
+        if (in_array($method, array('reply', 'unreply', 'like', 'unlike', 'haslike', 'follow', 'unfollow', 'hasfollow', 'bookmark', 'unbookmark', 'hasbookmark'))) {
             $flag = $method;
             $action = 'mark';
 
             if (strncmp($method, 'un', 2) == 0) {
                 $action = 'unMark';
-                $flag = strtolower(substr($method, 2));
+                $flag = substr($method, 2);
             }
 
             if (strncmp($method, 'has', 3) == 0) {
                 $action = 'hasMark';
-                $flag = strtolower(substr($method, 3));
+                $flag = substr($method, 3);
             }
 
             $indexes = array_flip(static::$flagLabels);
