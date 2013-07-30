@@ -66,6 +66,9 @@ class ActiveRecord extends CActiveRecord implements IArrayable
     public function paginate($limit = null)
     {
         return new ActiveDataProvider($this, array(
+            'criteria' => array(
+                'select' => array_diff(array_keys($this->getMetaData()->columns), $this->hidden),
+            ),
             'pagination' => array(
                 'pageSize' => $limit,
             ),

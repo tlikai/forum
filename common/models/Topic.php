@@ -4,6 +4,8 @@ class Topic extends ActiveRecord
 {
     public $tagIds;
 
+    protected $hidden = array('score', 'content');
+
     public function tableName()
     {
         return '{{topics}}';

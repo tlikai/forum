@@ -14,12 +14,14 @@ class TopicsController extends ApiController
 
     public function actionIndex()
     {
-        Response::make(Topic::model()->paginate());
+        $topics = new Topic;
+        Response::make($topics->paginate());
     }
 
     public function actionShow($id)
     {
         $topic = Topic::model()->with('user', 'lastPoster')->findOrFail($id);
+        $topic->setHidden('score');
         $topic->extraAttributes = array(
             'actions' => array(
                 'edit' => $topic->created_by == Yii::app()->user->id,
