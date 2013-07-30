@@ -2,6 +2,24 @@
 
 class RepliesController extends ApiController
 {
+    public function accessRules()
+    {
+        return array_merge(array(
+            array('allow',
+                'actions' => array('like', 'unlike', 'bookmark', 'unbookmark'),
+                'users' => array('@'),
+            ),
+        ), parent::accessRules());
+    }
+
+    public function beforeAction($action)
+    {
+        $params = $this->getActionParams();
+        Topic::model()->existOrFail($params['relation_id']);
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex($relation_id)
     {
         $replies = new Reply;
@@ -56,5 +74,41 @@ class RepliesController extends ApiController
         }
 
         Response::make($reply);
+    }
+
+    public function actionLike($relation_id, $id)
+    {
+        Reply::model()->existOrFail($id);
+
+        if (!UserAction::like(Yii::app()->user->id, $relation_id, $id)) {
+            throw new RuntimeException;
+        }
+    }
+
+    public function actionUnlike($relation_id, $id)
+    {
+        Reply::model()->existOrFail($id);
+
+        if (!UserAction::unLike(Yii::app()->user->id, $relation_id, $id)) {
+            throw new RuntimeException;
+        }
+    }
+
+    public function actionBookmark($relation_id, $id)
+    {
+        Reply::model()->existOrFail($id);
+
+        if (!UserAction::bookmark(Yii::app()->user->id, $relation_id, $id)) {
+            throw new RuntimeException;
+        }
+    }
+
+    public function actionUnbookmark($relation_id, $id)
+    {
+        Reply::model()->existOrFail($id);
+
+        if (!UserAction::unBookmark(Yii::app()->user->id, $relation_id, $id)) {
+            throw new RuntimeException;
+        }
     }
 }

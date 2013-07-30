@@ -36,6 +36,9 @@ return array(
 
                 // topics services
                 array('topics/<action>', 'pattern' => 'topics/<id:\d+>/<action:(like|unlike|follow|unfollow)>', 'verb' => 'POST'),
+
+                // replies services
+                array('replies/<action>', 'pattern' => 'topics/<relation_id:\d+>/replies/<id:\d+>/<action:(like|unlike|bookmark|unbookmark)>', 'verb' => 'POST'),
             ),
         ),
 
