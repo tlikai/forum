@@ -34,7 +34,7 @@ class Reply extends ActiveRecord
         };
 
         $this->onAfterDelete = function(CEvent $e) {
-            TopicFlag::reply($this->topic_id, $this->created_by);
+            TopicFlag::unReply($this->topic_id, $this->created_by);
         };
     }
 
