@@ -55,7 +55,7 @@ class Topic extends ActiveRecord
         $this->onAfterSave = array($this, 'resolveTags');
 
         $this->onBeforeDelete = function() {
-            UserAction::deleteReplies($this->id);
+            UserAction::deleteTopic($this->id);
         };
     }
 
