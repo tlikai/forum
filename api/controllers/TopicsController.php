@@ -82,6 +82,8 @@ class TopicsController extends ApiController
 
     public function actionLike($id)
     {
+        Topic::model()->existOrFail($id);
+
         if (!UserAction::like(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
@@ -89,6 +91,8 @@ class TopicsController extends ApiController
 
     public function actionUnlike($id)
     {
+        Topic::model()->existOrFail($id);
+
         if (!UserAction::unlike(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
@@ -96,6 +100,8 @@ class TopicsController extends ApiController
 
     public function actionFollow($id)
     {
+        Topic::model()->existOrFail($id);
+
         if (!UserAction::follow(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
@@ -103,6 +109,8 @@ class TopicsController extends ApiController
 
     public function actionUnfollow($id)
     {
+        Topic::model()->existOrFail($id);
+
         if (!UserAction::unFollow(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
