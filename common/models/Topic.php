@@ -61,4 +61,18 @@ class Topic extends ActiveRecord
             $model->save();
         }
     }
+
+    public function toArray()
+    {
+        if (!in_array('tags', $this->hidden)) {
+            $topicTags = TopicTag::model()->with('tag')->findAllByAttributes(array('topic_id' => $this->id));
+            foreach ($topicTags as $topicTag) {
+                $tags[] = $topicTag->tag->toArray();
+            }
+
+            $this->extraAttributes['tags'] = $tags;
+        }
+
+        return parent::toArray();
+    }
 }

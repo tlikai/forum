@@ -15,6 +15,7 @@ class TopicsController extends ApiController
     public function actionIndex()
     {
         $topics = new Topic;
+        $topics->with('user');
         Response::make($topics->paginate());
     }
 

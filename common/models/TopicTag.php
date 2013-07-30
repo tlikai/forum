@@ -15,4 +15,12 @@ class TopicTag extends ActiveRecord
             array('tag_id, topic_id', 'required'),
         );
     }
+
+    public function relations()
+    {
+        return array(
+            'tag' => array(self::BELONGS_TO, 'Tag', 'tag_id'),
+            'topic' => array(self::BELONGS_TO, 'Topic', 'topic_id'),
+        );
+    }
 }
