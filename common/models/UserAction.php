@@ -58,7 +58,7 @@ class UserAction extends ActiveRecord
         };
     }
 
-    public static function mark($flag, $user_id, $topic_id, $reply_id = null)
+    public static function mark($flag, $user_id, $topic_id, $reply_id = 0)
     {
         if (static::hasMark($flag, $user_id, $topic_id, $reply_id)) {
             throw new InvalidRequestException('Has already marked.');
@@ -75,7 +75,7 @@ class UserAction extends ActiveRecord
         return $model->save();
     }
 
-    public static function hasMark($flag, $user_id, $topic_id, $reply_id = null)
+    public static function hasMark($flag, $user_id, $topic_id, $reply_id = 0)
     {
         if ($flag == static::REPLY) {
             return false;
@@ -89,7 +89,7 @@ class UserAction extends ActiveRecord
         ));
     }
 
-    public static function unMark($flag, $user_id, $topic_id, $reply_id = null)
+    public static function unMark($flag, $user_id, $topic_id, $reply_id = 0)
     {
         $model = static::model()->find('flag = :flag AND user_id = :user_id AND topic_id = :topic_id AND reply_id = :reply_id', array(
             ':flag' => $flag,
@@ -105,7 +105,7 @@ class UserAction extends ActiveRecord
         return $model->delete();
     }
 
-    public static function updateCount($count, $flag, $topic_id, $reply_id = null)
+    public static function updateCount($count, $flag, $topic_id, $reply_id = 0)
     {
 
         $attribute = static::$flagAttributes[$flag];
