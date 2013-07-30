@@ -29,12 +29,12 @@ class Reply extends ActiveRecord
 
         $this->onAfterSave = function(CEvent $e) {
             if ($this->isNewRecord) {
-                TopicFlag::reply($this->topic_id, $this->created_by);
+                UserAction::reply($this->created_by, $this->topic_id, $this->id);
             }
         };
 
         $this->onAfterDelete = function(CEvent $e) {
-            TopicFlag::unReply($this->topic_id, $this->created_by);
+            UserAction::unReply($this->created_by, $this->topic_id, $this->id);
         };
     }
 

@@ -82,28 +82,28 @@ class TopicsController extends ApiController
 
     public function actionLike($id)
     {
-        if (!TopicFlag::like($id)) {
+        if (!UserAction::like(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
     }
 
     public function actionUnlike($id)
     {
-        if (!TopicFlag::unlike($id)) {
+        if (!UserAction::unlike(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
     }
 
     public function actionFollow($id)
     {
-        if (!TopicFlag::follow($id)) {
+        if (!UserAction::follow(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
     }
 
     public function actionUnfollow($id)
     {
-        if (!TopicFlag::unFollow($id)) {
+        if (!UserAction::unFollow(Yii::app()->user->id, $id)) {
             throw new RuntimeException;
         }
     }

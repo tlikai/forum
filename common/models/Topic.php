@@ -42,7 +42,12 @@ class Topic extends ActiveRecord
                 $this->last_post_by = $this->created_by;
             }
         };
+
         $this->onAfterSave = array($this, 'resolveTags');
+
+        $this->onBeforeDelete = function() {
+            UserAction::deleteReplies($this->id);
+        };
     }
 
     public function resolveTags(CEvent $e)
