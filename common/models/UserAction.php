@@ -117,10 +117,15 @@ class UserAction extends ActiveRecord
         return Topic::model()->updateCounters(array($attribute => $count), 'id = ?', array($topic_id));
     }
 
-    public static function deleteReplies($topic_id)
+    public static function deleteTopic($topic_id)
     {
         static::model()->deleteAllByAttributes(array('topic_id' => $topic_id));
         return Reply::model()->deleteAllByAttributes(array('topic_id' => $topic_id));
+    }
+
+    public static function deleteReply($reply_id)
+    {
+        return static::model()->deleteAllByAttributes(array('reply_id' => $reply_id));
     }
 
     public static function __callStatic($method, $parameters)

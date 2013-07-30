@@ -35,6 +35,7 @@ class Reply extends ActiveRecord
 
         $this->onAfterDelete = function(CEvent $e) {
             UserAction::unReply($this->created_by, $this->topic_id, $this->id);
+            UserAction::deleteReply($this->id);
         };
     }
 
