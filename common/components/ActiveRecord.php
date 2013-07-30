@@ -58,6 +58,24 @@ class ActiveRecord extends CActiveRecord implements IArrayable
     }
 
     /**
+     * Model exist or throw exception
+     *
+     * @param integer $id
+     * @throws NotFoundException
+     *
+     * @return boolean
+     */
+    public function existOrFail($id)
+    {
+        $column = $this->getTableSchema()->primaryKey;
+        if (!$this->exists("$column = ?", array($id))) {
+            throw new NotFoundException;
+        }
+
+        return true;
+    }
+
+    /**
      * 
      * @param integer $limit
      *
