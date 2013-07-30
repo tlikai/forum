@@ -22,6 +22,8 @@ class Topic extends ActiveRecord
     {
         return array(
             'user' => array(static::BELONGS_TO, 'User', 'created_by'),
+            'lastPoster' => array(static::BELONGS_TO, 'User', 'last_post_by'),
+            'replies' => array(static::HAS_MANY, 'Reply', 'topic_id'),
         );
     }
 

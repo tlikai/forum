@@ -19,7 +19,17 @@ class TopicsController extends ApiController
 
     public function actionShow($id)
     {
-        Response::make(Topic::model()->with('user')->findOrFail($id));
+        $topic = Topic::model()->with('user', 'lastPoster')->findOrFail($id);
+        $topic->extraAttributes = array(
+            'actions' => array(
+                'edit' => $topic->created_by == Yii::app()->user->id,
+                'like' => !Yii::app()->user->isGuest && !TopicFlag::hasLike($topic->id, Yii::app()->user->id),
+                'follow' => !Yii::app()->user->isGuest && !TopicFlag::hasFollow($topic->id, Yii::app()->user->id),
+                'repliy' => !Yii::app()->user->isGuest,
+            ),
+        );
+
+        Response::make($topic);
     }
 
     public function actionCreate()

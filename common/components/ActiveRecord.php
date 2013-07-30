@@ -2,6 +2,8 @@
 
 class ActiveRecord extends CActiveRecord implements IArrayable
 {
+    public $extraAttributes = array();
+
     /**
      * hidden attributes fo toArray
      *
@@ -81,9 +83,19 @@ class ActiveRecord extends CActiveRecord implements IArrayable
 
         foreach($this->relations() as $name => $v) {
             if ($this->hasRelated($name)) {
-                $attributes[$name] = $this->getRelated($name)->toArray();
+                $relation = $this->getRelated($name);
+                if (is_array($relation)) {
+                    foreach ($relation as $key => $val) {
+                        $relation[$key] = $val->toArray();
+                    }
+                    $attributes[$name] = $relation;
+                } else {
+                    $attributes[$name] = $relation->toArray();
+                }
             }
         }
+
+        $attributes = array_merge($attributes, $this->extraAttributes);
 
         return array_diff_key($attributes, array_flip($this->hidden));
     }
