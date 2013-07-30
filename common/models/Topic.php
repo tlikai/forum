@@ -40,6 +40,15 @@ class Topic extends ActiveRecord
                 }
                 $this->last_post_at = $this->created_at;
                 $this->last_post_by = $this->created_by;
+
+                // check tags exists
+                $this->tagIds = array_slice($this->tagIds, 0, 5);
+                $criteria = new CDbCriteria;
+                $criteria->addInCondition('id', $this->tagIds);
+                $tagCount = Tag::model()->count($criteria);
+                if ($tagCount != count($this->tagIds)) {
+                    throw new NotFoundException('Inalid tags');
+                }
             }
         };
 
@@ -56,8 +65,7 @@ class Topic extends ActiveRecord
             TopicTag::model()->deleteAll('topic_id = ?', array($this->id));
         }
 
-        $tagIds = array_slice($this->tagIds, 0, 5);
-        foreach ($tagIds as $tagId) {
+        foreach ($this->tagIds as $tagId) {
             $model = new TopicTag;
             $model->attributes = array(
                 'tag_id' => $tagId,
@@ -70,6 +78,7 @@ class Topic extends ActiveRecord
     public function toArray()
     {
         if (!in_array('tags', $this->hidden)) {
+            $tags = array();
             $topicTags = TopicTag::model()->with('tag')->findAllByAttributes(array('topic_id' => $this->id));
             foreach ($topicTags as $topicTag) {
                 $tags[] = $topicTag->tag->toArray();
