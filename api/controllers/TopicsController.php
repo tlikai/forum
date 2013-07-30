@@ -80,4 +80,18 @@ class TopicsController extends ApiController
             throw new RuntimeException;
         }
     }
+
+    public function actionFollow($id)
+    {
+        if (!TopicFlag::follow($id)) {
+            throw new RuntimeException;
+        }
+    }
+
+    public function actionUnfollow($id)
+    {
+        if (!TopicFlag::unFollow($id)) {
+            throw new RuntimeException;
+        }
+    }
 }

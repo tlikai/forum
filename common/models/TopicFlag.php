@@ -134,4 +134,20 @@ class TopicFlag extends ActiveRecord
     {
         return static::unMark(static::LIKE, $topic_id, $user_id);
     }
+
+    // Mark follow
+    public static function follow($topic_id, $user_id = null)
+    {
+        return static::mark(static::FOLLOW, $topic_id, $user_id);
+    }
+
+    public static function hasFollow($topic_id, $user_id = null)
+    {
+        return static::hasMark(static::FOLLOW, $topic_id, $user_id);
+    }
+
+    public static function unFollow($topic_id, $user_id = null)
+    {
+        return static::unMark(static::FOLLOW, $topic_id, $user_id);
+    }
 }
