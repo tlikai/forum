@@ -15,6 +15,13 @@ class Reply extends ActiveRecord
         );
     }
 
+    public function relations()
+    {
+        return array(
+            'topic' => array(self::BELONGS_TO, 'Topic', 'topic_id'),
+        );
+    }
+
     public function init()
     {
         parent::init();
@@ -30,6 +37,10 @@ class Reply extends ActiveRecord
         $this->onAfterSave = function(CEvent $e) {
             if ($this->isNewRecord) {
                 UserAction::reply($this->created_by, $this->topic_id, $this->id);
+
+                Notification::send($this->topic->created_by, $this->created_by, $this->topic_id, $this->id);
+
+                // TODO notify topic followers
             }
         };
 
