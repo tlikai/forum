@@ -38,9 +38,12 @@ class Reply extends ActiveRecord
             if ($this->isNewRecord) {
                 UserAction::reply($this->created_by, $this->topic_id, $this->id);
 
-                Notification::send($this->topic->created_by, $this->created_by, $this->topic_id, $this->id);
-
-                // TODO notify topic followers
+                // notify topic followers
+                foreach ($this->topic->getFollowers() as $follower) {
+                    if ($follower->user_id != Yii::app()->user->id) {
+                        Notification::send(Notification::FOLLOW, $follower->user_id, $this->created_by, $this->topic_id, $this->id);
+                    }
+                }
             }
         };
 

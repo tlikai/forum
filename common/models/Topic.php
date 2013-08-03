@@ -26,6 +26,7 @@ class Topic extends ActiveRecord
             'user' => array(static::BELONGS_TO, 'User', 'created_by'),
             'lastPoster' => array(static::BELONGS_TO, 'User', 'last_post_by'),
             'replies' => array(static::HAS_MANY, 'Reply', 'topic_id'),
+            'actions' => array(static::HAS_MANY, 'UserAction', 'topic_id'),
         );
     }
 
@@ -33,7 +34,7 @@ class Topic extends ActiveRecord
     {
         parent::init();
 
-        $this->onBeforeSave = function(CEvent $e){
+        $this->onBeforeSave = function(CEvent $e) {
             if ($this->isNewRecord) {
                 if (!$this->created_by) {
                     $this->created_by = Yii::app()->user->id;    
@@ -54,9 +55,26 @@ class Topic extends ActiveRecord
 
         $this->onAfterSave = array($this, 'resolveTags');
 
+        // follow topic
+        $this->onAfterSave = function(CEvent $e) {
+            if ($this->isNewRecord) {
+                UserAction::follow($this->created_by, $this->id);
+            }
+        };
+
         $this->onBeforeDelete = function() {
             UserAction::deleteTopic($this->id);
         };
+    }
+
+    public function getFollowers()
+    {
+        return $this->actions(array(
+            'condition' => 'flag = :flag',
+            'params' => array(
+                ':flag' => UserAction::FOLLOW,
+            ),
+        ));
     }
 
     public function resolveTags(CEvent $e)
