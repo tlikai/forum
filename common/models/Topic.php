@@ -30,6 +30,16 @@ class Topic extends ActiveRecord
         );
     }
 
+    public function behaviors()
+    {
+        return array(
+            'search' => array(
+                'class' => 'SearchBehavior',
+                'searchAttribute' => 'subject',
+            ),
+        );
+    }
+
     public function init()
     {
         parent::init();

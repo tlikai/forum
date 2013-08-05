@@ -12,10 +12,13 @@ class TopicsController extends ApiController
         ), parent::accessRules());
     }
 
-    public function actionIndex()
+    public function actionIndex($query = null)
     {
         $topics = new Topic;
         $topics->with('user');
+        if ($query) {
+            $topics->search($query);
+        }
         Response::make($topics->paginate());
     }
 
@@ -26,8 +29,8 @@ class TopicsController extends ApiController
         $topic->extraAttributes = array(
             'actions' => array(
                 'edit' => $topic->created_by == Yii::app()->user->id,
-                'like' => !Yii::app()->user->isGuest && !TopicFlag::hasLike($topic->id, Yii::app()->user->id),
-                'follow' => !Yii::app()->user->isGuest && !TopicFlag::hasFollow($topic->id, Yii::app()->user->id),
+                'like' => !Yii::app()->user->isGuest && !UserAction::hasLike($topic->id, Yii::app()->user->id),
+                'follow' => !Yii::app()->user->isGuest && !UserAction::hasFollow($topic->id, Yii::app()->user->id),
                 'repliy' => !Yii::app()->user->isGuest,
             ),
         );
