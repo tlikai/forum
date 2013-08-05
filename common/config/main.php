@@ -34,6 +34,14 @@ return array(
             'tablePrefix' => '',
         ),
 
+        'redis' => array(
+            'class' => 'common.extensions.YiiRedis.ARedisConnection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => true,
+            'prefix' => 'Yii.redis.'
+        ),
+
         'user' => array(
             'class' => 'WebUser',
         ),

@@ -1,0 +1,3 @@
+[submodule "common/extensions/YiiRedis"]
+	path = common/extensions/YiiRedis
+	url = https://github.com/phpnode/YiiRedis.git
