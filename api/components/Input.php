@@ -11,6 +11,12 @@ class Input
         return isset($input[$key]) ? $input[$key] : $default;
     }
 
+    public static function has($key)
+    {
+        $input = static::all();
+        return isset($input[$key]);
+    }
+
     public static function only($keys)
     {
         $input = static::all();
