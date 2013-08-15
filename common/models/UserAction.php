@@ -131,25 +131,25 @@ class UserAction extends ActiveRecord
     public static function __callStatic($method, $parameters)
     {
         $method = strtolower($method);
-        if (in_array($method, array('reply', 'unreply', 'like', 'unlike', 'haslike', 'follow', 'unfollow', 'hasfollow', 'bookmark', 'unbookmark', 'hasbookmark'))) {
-            $flag = $method;
-            $action = 'mark';
-
-            if (strncmp($method, 'un', 2) == 0) {
-                $action = 'unMark';
-                $flag = substr($method, 2);
-            }
-
-            if (strncmp($method, 'has', 3) == 0) {
-                $action = 'hasMark';
-                $flag = substr($method, 3);
-            }
-
-            $indexes = array_flip(static::$flagLabels);
-            $args = array_merge(array($indexes[$flag]), $parameters);
-            return call_user_func_array(array('UserAction', $action), $args);
+        if (!in_array($method, array('reply', 'unreply', 'like', 'unlike', 'haslike', 'follow', 'unfollow', 'hasfollow', 'bookmark', 'unbookmark', 'hasbookmark'))) {
+            throw new BadMethodCallException;
         }
 
-        throw new BadMethodCallException;
+        $flag = $method;
+        $action = 'mark';
+
+        if (strncmp($method, 'un', 2) == 0) {
+            $action = 'unMark';
+            $flag = substr($method, 2);
+        }
+
+        if (strncmp($method, 'has', 3) == 0) {
+            $action = 'hasMark';
+            $flag = substr($method, 3);
+        }
+
+        $indexes = array_flip(static::$flagLabels);
+        $args = array_merge(array($indexes[$flag]), $parameters);
+        return call_user_func_array(array('UserAction', $action), $args);
     }
 }
