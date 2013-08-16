@@ -57,8 +57,15 @@ return array(
                  */
             ),
         ),
+
     ),
 
     // application parameters
-    'params' => array(),
+    'params' => array(
+        'upload' => array(
+            'savePath' => 'static/upload',
+            'allowTypes' => array('image/jpeg', 'image/png'),
+            'allowSize' => 1024 * 1024 * 5, // 5MB
+        ),
+    ),
 );

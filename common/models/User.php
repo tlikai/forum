@@ -4,6 +4,9 @@ class User extends ActiveRecord
 {
     protected $hidden = array('password');
 
+    public $newPassword;
+    public $confirmPassword;
+
     public function tableName()
     {
         return '{{users}}';
@@ -20,6 +23,9 @@ class User extends ActiveRecord
             array('avatar', 'safe'),
 
             array('name, email', 'unique', 'className' => 'User', 'on' => 'create'),
+
+            array('password, newPassword, confirmPassword', 'required', 'on' => 'updatePassword'),
+            array('newPassword', 'compare', 'compareAttribute' => 'confirmPassword', 'on' => 'updatePassword'),
         );
     }
 
@@ -28,7 +34,9 @@ class User extends ActiveRecord
         parent::init();
 
         $this->onBeforeSave = function(CEvent $e) {
-            $this->password = Hash::make($this->password);
+            if ($this->scenario == 'changePassword') {
+                $this->password = Hash::make($this->password);
+            }
         };
     }
 

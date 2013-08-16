@@ -29,10 +29,12 @@ return array(
                 'tags',
                 'topics',
                 'topics.replies',
+                array('users', 'only' => array('show', 'update')),
             ),
             'rules' => array(
                 // users services
                 array('users/<action>', 'pattern' => '<action:(signup|signin|signout)>', 'verb' => 'POST'),
+                array('users/<action>', 'pattern' => 'users/<action:(avatar)>', 'verb' => 'POST'),
 
                 // topics services
                 array('topics/<action>', 'pattern' => 'topics/<id:\d+>/<action:(like|unlike|follow|unfollow)>', 'verb' => 'POST'),
