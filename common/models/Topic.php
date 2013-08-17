@@ -64,6 +64,7 @@ class Topic extends ActiveRecord
         };
 
         $this->onAfterSave = array($this, 'resolveTags');
+        $this->onAfterSave = array($this, 'resolveMention');
 
         // follow topic
         $this->onAfterSave = function(CEvent $e) {
@@ -100,6 +101,21 @@ class Topic extends ActiveRecord
                 'topic_id' => $this->id,
             );
             $model->save();
+        }
+    }
+
+    public function resolveMention(CEvent $e)
+    {
+        if (!$this->isNewRecord) {
+            return null;
+        }
+
+        $names = Str::getMentionUserNames($this->content);
+        $users = User::model()->findAllByAttributes(array('name' => $names));
+        foreach ($users as $user) {
+            if ($user && $user->id !== $this->created_by) {
+                Notification::send(Notification::MENTION, $user->id, $this->created_by, $this->id);
+            }
         }
     }
 
