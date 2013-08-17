@@ -30,7 +30,7 @@ class Str
     {
         $names = array();
 
-        $pattern = '/(^|\s)@(\w+)/';
+        $pattern = '/(^|\s)@([a-zA-Z0-9_\x{4e00}-\x{9fa5}]+)/u';
         if (preg_match_all($pattern, $content, $matches)) {
             foreach ($matches[2] as $name) {
                 $names[] = $name;
