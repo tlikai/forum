@@ -78,6 +78,53 @@ class Topic extends ActiveRecord
         };
     }
 
+    /**
+     * scope tab
+     *
+     * @string $tablName
+     * @return Topic
+     */
+    public function scopeTab($tabName)
+    {
+        if ($tagName == 'popular') {
+            $this->dbCriteria->mergerWith(array(
+                'order' => 'scope DESC',
+            ));
+        }
+
+        if ($tagName == 'latest') {
+            $this->dbCriteria->mergerWith(array(
+                'order' => 'created_at DESC',
+            ));
+        }
+
+        return $this;
+    }
+
+    public function scopeTags($tagNames)
+    {
+        if (is_string($tagNames)) {
+            $tagNames = explode(',', $tagNames);
+        }
+
+        $criteria = new CDbCriteria;
+        $criteria->index = 'id';
+        $criteria->addInCondition('name', $tagNames);
+        $tags = Tag::model()->findAll($criteria);
+        $tagIds = array_keys($tags);
+
+        $criteria = new CDbCriteria;
+        $criteria->addInCondition('tag_id', $tagIds);
+        $topicTags= TopicTag::model()->findAll($criteria);
+        $topicIds = array_keys($topicTags);
+
+        $criteria = new CDbCriteria;
+        $criteria->addInCondition('t.id', $topicIds);
+        $this->dbCriteria->mergeWith($criteria);
+
+        return $this;
+    }
+
     public function getFollowers()
     {
         return $this->actions(array(

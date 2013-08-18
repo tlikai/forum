@@ -12,13 +12,24 @@ class TopicsController extends ApiController
         ), parent::accessRules());
     }
 
-    public function actionIndex($query = null)
+    public function actionIndex()
     {
         $topics = new Topic;
-        $topics->with('user');
-        if ($query) {
-            $topics->search($query);
+
+        if (Input::has('tab')) {
+            $topics->scopeTab(Input::get('tab'));
         }
+
+        if (Input::has('tags')) {
+            $topics->scopeTags(Input::get('tags'));
+        }
+
+        if (Input::has('query')) {
+            $topics->search(Input::get('query'));
+        }
+
+        $topics->with(array('user'));
+
         Response::make($topics->paginate());
     }
 
@@ -42,7 +53,7 @@ class TopicsController extends ApiController
     {
         $topic = new Topic('create');
         $topic->attributes = Input::only('subject', 'content');
-        $topic->tagIds = Input::get('tags');
+        $topic->tags = Input::get('tags');
 
         if (!$topic->save()) {
             throw new ValidationException($topic->getErrors());
