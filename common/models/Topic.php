@@ -107,16 +107,15 @@ class Topic extends ActiveRecord
             $tagNames = explode(',', $tagNames);
         }
 
-        $criteria = new CDbCriteria;
-        $criteria->index = 'id';
-        $criteria->addInCondition('name', $tagNames);
-        $tags = Tag::model()->findAll($criteria);
-        $tagIds = array_keys($tags);
+        $tags = Tag::model()->findAllByAttributes(array('name' => $tagNames));
+        $tagIds = array_map(function($tag){
+            return $tag['id'];
+        }, $tags);
 
-        $criteria = new CDbCriteria;
-        $criteria->addInCondition('tag_id', $tagIds);
-        $topicTags= TopicTag::model()->findAll($criteria);
-        $topicIds = array_keys($topicTags);
+        $topicTags = TopicTag::model()->findAllByAttributes(array('tag_id' => $tagIds));
+        $topicIds = array_map(function($tag){
+            return $tag['topic_id'];
+        }, $topicTags);
 
         $criteria = new CDbCriteria;
         $criteria->addInCondition('t.id', $topicIds);
