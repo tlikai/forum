@@ -59,7 +59,7 @@ module.exports = (grunt) ->
 				options:
 					base: './dist/'
 					middleware: require './middleware'
-					port: 0
+					port: 9100
 
 		# Copies directories and files from one location to another.
 		copy:
