@@ -16,6 +16,7 @@ class Topic extends ActiveRecord
         return array(
             array('subject, content', 'required'),
             array('tagIds', 'required', 'on' => 'create'),
+            array('subject, content', 'filter', 'filter' => 'trim'),
             array('created_by, last_post_at, last_post_by, score, like_count, reply_count, follow_count, created_at, updated_at', 'numerical'),
         );
     }
