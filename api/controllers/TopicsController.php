@@ -53,7 +53,7 @@ class TopicsController extends ApiController
     {
         $topic = new Topic('create');
         $topic->attributes = Input::only('subject', 'content');
-        $topic->tags = Input::get('tags');
+        $topic->tagIds = Input::get('tags');
 
         if (!$topic->save()) {
             throw new ValidationException($topic->getErrors());
