@@ -1,0 +1,111 @@
+// user avatar
+.avatar img{
+    .border-radius(@inputBorderRadius);
+}
+
+// box block
+.box{
+    background: @white;
+    border: 1px solid @borderColor;
+    margin-bottom: 10px;
+    .box-shadow(0 1px 1px @gray);
+    .border-radius(4px);
+
+    .box-header{
+        margin: 0;
+        padding: 0 10px;
+        color: @grayDark;
+        font-size: @fontSizeLarge;
+        line-height: 40px;
+        font-weight: normal;
+        border-bottom: 1px solid @borderColor;
+    }
+
+    form .box-header{
+        margin-bottom: 20px;
+    }
+
+    .box-body, .box-footer{
+        padding: 10px 20px;
+    }
+
+    .box-footer{
+        .form-actions();
+        margin: 0;
+    }
+}
+
+// topic lists
+.list{
+    th{
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 1px solid @grayLight;
+    }
+    th, td{
+        padding: 7px 5px;
+        &:first-child{padding-left: 15px;}
+        &:last-child{padding-right: 15px;}
+    }
+
+    thead{
+        .title{width: 540px;}
+        .participants{width: 180px;}
+        .count{width: 50px; text-align: center;}
+    }
+
+    tbody{
+        .summary{
+            .title{
+                font-size: 14px;
+                line-height: 20px;
+                color: @black;
+                &:hover{
+                    text-decoration: underline;
+                }
+                &:visited{
+                    color: @grayDarker;
+                }
+            }
+            .tags{
+                margin-top: 5px;
+                color: @gray;
+                i{color: @grayDark;}
+                .tag{
+                    padding: 1px 3px;
+                    color: @grayDark;
+                    &:hover{
+                        color: @linkColorHover;
+                    }
+                }
+            }
+        }
+        .participants{
+            .avatar{
+                img{
+                    width: 30px;
+                    height: 30px;
+                    overflow: hidden;
+                }
+                &:hover{
+                    img{
+                        .box-shadow(0 0 5px 1px @grayDarker);
+                    }
+                }
+            }
+        }
+        .count{
+            text-align: center;
+        }
+    }
+}
+
+.loading{
+    width: 200px;
+    padding: 15px 0 15px 32px;
+    margin: 0 auto;
+    font-weight: bold;
+    color: @linkColor;
+    font-size: @fontSizeLarge;
+    background: url(../images/loading.gif) no-repeat 10px 50%;
+}

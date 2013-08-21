@@ -1,0 +1,114 @@
+// reset 
+a{.dtransition();}
+a:hover{text-decoration: none;}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    color: @grayDark;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6{line-height: @baseLineHeight;}
+
+h1{font-size: @baseFontSize * 1.8; line-height: 30px;}
+h2{font-size: @baseFontSize * 1.6;}
+h3{font-size: @baseFontSize * 1.4;}
+h4{font-size: @baseFontSize * 1.2;}
+h5{font-size: @baseFontSize;}
+h6{font-size: 10px;}
+
+h1 small { font-size: 18px; }
+h2 small { font-size: 16px; }
+h3 small { font-size: 14px; }
+
+blockquote{
+    padding: 0 0 0 10px;
+
+    p{
+        font-size: @baseFontSize;
+    }
+}
+
+
+// components
+.nav-pills{
+    li > a{
+        color: @grayDark;
+        margin-right: 10px;
+        text-shadow: 0 1px 1px @white;
+    }
+    li > a:hover{
+        color: @gray;
+        .dtransition();
+    }
+    .active a, .active > a:hover, .active > a:focus{
+        color: @white;
+        background: #9f2b14;
+        text-shadow: 0 1px 1px @shadownColor;
+        #gradient > .vertical(@red, darken(@red, 10%));
+        .box-shadow(0 1px 3px @shadownColor);
+        .border-radius(@borderRadiusLarge);
+    }
+}
+
+.navbar{
+    .navbar-search{
+        .search-query{
+            .border-radius(3px);
+        }
+    }
+}
+
+.nav-list{
+    .nav-header{
+        padding: 5px 0;
+        font-size: @fontSizeLarge;
+        line-height: @fontSizeLarge * 2;
+    }
+    li > a{
+        font-size: @fontSizeMiddle;
+        color: @grayDark;
+        margin-bottom: 10px;
+        padding: @paddingSmall;
+        border-left: 5px solid transparent;
+    }
+    li > a:hover{
+        background: transparent;
+    }
+    .active > a, .active a:hover, .active > a:focus{
+        font-weight: bold;
+        color: @grayDarker;
+        background: transparent;
+        border-left: 5px solid @borderColor;
+    }
+}
+
+.form-horizontal{
+    .control-label{
+        color: @grayDarker;
+    }
+}
+
+/*
+[class^="icon-"], [class*=" icon-"]{
+    color: @iconColor;
+}
+*/

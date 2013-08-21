@@ -1,0 +1,145 @@
+.page{
+    form{
+        margin: 0;
+
+        .alert{
+            margin: 0 10px;
+        }
+    }
+}
+
+.simple-page{
+    form{
+        margin: 0;
+
+        .alert{
+            margin: 0 10px;
+        }
+    }
+    .form-horizontal .control-label{
+        width: 80px;
+    }
+    .form-horizontal .controls{
+        margin-left: 100px;
+    }
+    .form-horizontal .form-actions{
+        padding-left: 100px;
+        margin-bottom: 0;
+    }
+    legend{
+        font-size: 16px;
+        padding: 0 10px;
+    }
+}
+
+// topic view page
+.posts{
+    .post{
+        margin-bottom: 10px;
+        .avatar{
+            float: left;
+            width: 80px;
+        }
+
+        .content{
+            position: relative;
+            margin-left: 80px;
+
+            .meta{
+                padding: 10px;
+                color: @grayDark;
+                .author{
+                    color: @black;
+                    font-weight: bold;
+                }
+
+                .actions{
+                    float: right;
+                    a{
+                        color: @grayDark;
+                    }
+                }
+            }
+            .body{
+                padding: 0 10px 10px;
+
+                img{
+                    .border-radius(@borderRadiusLarge);
+                }
+            }
+            .toolbar{
+                padding: 10px;
+                border-top: 1px solid @borderColor;
+                background: #f8f8f8;
+                text-align: right;
+            }
+            .editor-area{
+                padding: 10px;
+                .editor{
+                    width: 825px;
+                } 
+            }
+
+            &:before, &:after {
+                position: absolute;
+                width: 0;
+                height: 0;
+                content: "";
+                border-style: solid;
+                border-color: transparent;
+                pointer-events: none;
+            }
+
+            &:after{
+                top: 10px;
+                left: -9px;
+                border-width: 9px 9px 9px 0;
+                border-right-color: @white;
+            }
+            &:before{
+                top: 10px;
+                left: -10px;
+                border-color: transparent;
+                border-width: 10px 10px 10px 0;
+                border-right-color: @borderColor;
+                border-style: solid;
+            }
+        }
+    }
+}
+
+// node list page
+.node-list{
+    .section{
+        dt{
+            font-size: @fontSizeLarge;
+        }
+        dd{
+            margin-top: 10px;
+            a{
+                margin-right: 15px;
+            }
+        }
+    }
+}
+
+// user home page
+.home{
+    .header{
+        height: 100px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        
+        .avatar{
+            float: left;
+        }
+
+        .info{
+            margin-left: 120px;
+
+            .description{
+                color: @grayDark;
+            }
+        }
+    }
+}

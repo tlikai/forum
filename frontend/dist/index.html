@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Teaconf.com</title>
+		<meta name="viewport" content="width=device-width" />
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+		<!--[if lte IE 8]> <script src="/scripts/libs/json3.js?v=24ee73b0f5"></script> <script src="/scripts/libs/html5shiv-printshiv.js?v=df84425b0c"></script> <![endif]-->
+
+		
+			<link rel="stylesheet" href="/styles/styles.css?v=0204704544" />
+		
+
+		<!-- ClickJacking Defense begin (https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet) -->
+		<style id="antiClickjack">
+			body {
+				display: none !important;
+			}
+		</style>
+
+		<script>
+			(function (win) {
+				if (win.top === win.self) {
+					var antiClickjack = win.document.getElementById('antiClickjack');
+
+					antiClickjack.parentNode.removeChild(antiClickjack);
+				} else {
+					win.top.location = win.self.location;
+				}
+			}(window));
+		</script>
+		<!-- ClickJacking Defense end -->
+    </head>
+    <body ng-cloak class="ng-cloak">
+		<ng:view></ng:view>
+        <header id="topnav">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="brand" href="#">TEA<strong class="muted">CONF</strong></a>
+                        <div class="nav-collapse collapse">
+                            <form class="navbar-search pull-left" action="">
+                                <input type="text" class="search-query sspan2" placeholder="Search">
+                            </form>
+                            <ul class="nav">
+                                <li class="active"><a href="#">首页</a></li>
+                                <li><a href="#">帮助</a></li>
+                                <li><a href="#">关于</a></li>
+                            </ul>
+                            <ul class="nav pull-right">
+                                <li><a href="#">登录</a></li>
+                                <li><a href="#">注册</a></li>
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="wrapper" class="container"></div>
+
+		
+			<script data-main="/scripts/main.js" src="/scripts/libs/require.js?v=88dd88f5c6"></script>
+		
+    </body>
+</html>
