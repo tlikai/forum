@@ -28,7 +28,7 @@ class TopicsController extends ApiController
             $topics->search(Input::get('query'));
         }
 
-        $topics->with(array('user'));
+        $topics->with(array('tags', 'user'));
 
         Response::make($topics->paginate());
     }

@@ -28,6 +28,7 @@ class Topic extends ActiveRecord
             'lastPoster' => array(static::BELONGS_TO, 'User', 'last_post_by'),
             'replies' => array(static::HAS_MANY, 'Reply', 'topic_id'),
             'actions' => array(static::HAS_MANY, 'UserAction', 'topic_id'),
+            'tags' => array(static::MANY_MANY, 'Tag', '{{topic_tags}}(topic_id, tag_id)'),
         );
     }
 
@@ -164,20 +165,5 @@ class Topic extends ActiveRecord
                 Notification::send(Notification::MENTION, $user->id, $this->created_by, $this->id);
             }
         }
-    }
-
-    public function toArray()
-    {
-        if (!in_array('tags', $this->hidden)) {
-            $tags = array();
-            $topicTags = TopicTag::model()->with('tag')->findAllByAttributes(array('topic_id' => $this->id));
-            foreach ($topicTags as $topicTag) {
-                $tags[] = $topicTag->tag->toArray();
-            }
-
-            $this->extraAttributes['tags'] = $tags;
-        }
-
-        return parent::toArray();
     }
 }
